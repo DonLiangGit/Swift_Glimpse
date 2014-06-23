@@ -108,6 +108,7 @@ default:
 // for-in iteration
 // Experiment: add a variable for keep track which type of the variable is, and another for the largest number was.
 //**
+// * This is a part we need to think why the order of dictionary is not the same order when we declare.
 let interestingNumbers = [
     "Prime": [2,3,5,7,11,13],
     "Fibonacci": [1,1,2,3,5,8],
@@ -151,3 +152,57 @@ for var i = 0; i < 3; ++i {
 secondForLoop
 
 // * FUNCTIONS AND CLOSURES *
+
+// Use func to declare a function and -> to define the return type.
+// Experiment: add another parameter.
+func greet(name: String, day: String, lunch: String) -> String{
+    return "Hello \(name), today is \(day), lunch is \(lunch)."
+}
+
+greet("Bob", "Tuesday", "Steamed ribs")
+
+// Use tuple to return multiple values from a function
+func getGasPrices() -> (Double, Double, Double) {
+    return (3.59,3.69,3.79)
+}
+getGasPrices()
+
+// ** IMPORTANT! **
+func sumOf(numbers: Int...) -> Int {
+    var sum = 0
+    for number in numbers {
+        sum += number
+    }
+    return sum
+}
+sumOf()
+sumOf(42,597,12)
+
+// Experiment: write a function that calculates the average of its arguments.
+// **
+func averageOf(numbers: Int...) -> Int {
+    return 0
+}
+averageOf()
+averageOf(42,597,12)
+
+// nested functions
+func returnFifteen() -> Int {
+    var y = 10
+    func add() {
+        y += 5
+    }
+    add()
+    return y
+}
+returnFifteen()
+
+// * Functions are a first-class type. this means that a function can return another function as its value.
+func makeIncrementer() -> (Int -> Int) {
+    func addOne(number:Int) -> Int {
+        return 1 + number
+    }
+    return addOne
+}
+var increment = makeIncrementer()
+increment(7)

@@ -212,3 +212,46 @@ func makeIncrementer() -> (Int -> Int) {
 }
 var increment = makeIncrementer()
 increment(7)
+
+// A function can take another function as one of its argument.
+// * IMPORTANT! ＊ when find one the for-loop will stop.
+func hasAnyMatches(list:Int[], condition: Int -> Bool) -> Bool {
+    for item in list {
+        if condition(item) {
+            return true
+        }
+    }
+    return false
+}
+func lessThanTen(number:Int) -> Bool {
+    return number < 10
+}
+var numbers = [20,19,7,12]
+hasAnyMatches(numbers, lessThanTen)
+// ** What variable.* means? like a shortcut expression for return a value for a variable
+// Using "in" to seperate the arguments and returen value.
+numbers.map ({
+    (number: Int) -> Int in
+    let result = 3 * number
+    return result
+    })
+// Experiment: Rewrite the closure to return zero for all odd numbers.
+numbers.map ({
+    (number: Int) -> Int in
+    if number % 2 == 0 {
+        return number
+    }
+    else {
+        return 0
+    }
+    })
+
+// More concisely, return the only statement in closure.
+numbers.map({ number in 3*number })
+
+// details: https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/Closures.html
+// Here sort is a built-in function
+// Use number as a shorthand to represent the argument.
+// In this one the first argument is the array which we need to sort, and the closure is the second argument let the sorted array follows the descending rule.
+sort([1,5,3,12,2]){ $0 > $1 }
+

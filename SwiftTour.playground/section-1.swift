@@ -179,12 +179,18 @@ sumOf()
 sumOf(42,597,12)
 
 // Experiment: write a function that calculates the average of its arguments.
-// **
-func averageOf(numbers: Int...) -> Int {
-    return 0
+// * Intrepreter gone wrong *
+func averageOf (numbers: Int...) -> Int {
+    var sum = 0
+    
+    for number in numbers {
+        sum += number
+    }
+    
+    return sum/numbers.count
 }
-averageOf()
-averageOf(42,597,12)
+
+averageOf(42, 597, 12)
 
 // nested functions
 func returnFifteen() -> Int {

@@ -77,9 +77,77 @@ while index < 5 {
 }
 // if score {...} is an error, not an implicit comparison to ZERO
 
+// use ?after String to make a optional value which is nil or has value in it.
+var optionalString: String? = "Hello"
+optionalString == nil // check the string is Nil or not.
 
+// var optionalName: String? = "Don Leung"
+// use if let to compare the optional variable
+var optionalName: String? = "Don"
+optionalName == nil
+var greeting = "Hello!"
+if let name = optionalName {
+    greeting = "Hello, \(name)"
+} else {
+    greeting = "Hello, nil"
+}
+// Experiment:Change optionalName to nil. What greeting do you get? Add an else clause that sets a different greeting if optionalName is nil.
+// if no default clause, there is an error.
+let vegetable = "red pepper"
+switch vegetable {
+case"celery":
+    let vegetableComment = "Add some raisins"
+case "cucumber", "watercress":
+    let vegetableComment = "Awesome"
+case let x where x.hasSuffix("pepper"):
+    let vegetableComment = "Is it a spicy \(x)?"
+default:
+    let vegetableComment = "Everthing tasts good."
+}
 
+// for-in iteration
+// Experiment: add a variable for keep track which type of the variable is, and another for the largest number was.
+//**
+let interestingNumbers = [
+    "Prime": [2,3,5,7,11,13],
+    "Fibonacci": [1,1,2,3,5,8],
+    "Square": [1,4,9,16,25],
+]
+var largest = 0
+var largestKind = ""
+for (kind,numbers) in interestingNumbers {
+    kind
+    for number in numbers {
+        if number > largest{
+            largest = number
+            largestKind = kind
+        }
+    }
+}
+largest
+largestKind
 
+var n = 2
+while n < 100 {
+    n *= 2
+}
+n
 
+var m = 2
+do {
+    m *= 2
+} while m < 100
+// using .. to make range of indexs to do loop. not includes the last number.
+var firstForLoop = 0
+for i in 0..3 {
+    firstForLoop += i
+}
+firstForLoop
 
-var str = "Hello, playground"
+var secondForLoop = 0
+for var i = 0; i < 3; ++i {
+    secondForLoop += 1
+}
+secondForLoop
+
+// * FUNCTIONS AND CLOSURES *

@@ -78,12 +78,13 @@ while index < 5 {
 // if score {...} is an error, not an implicit comparison to ZERO
 
 // use ?after String to make a optional value which is nil or has value in it.
-var optionalString: String? = "Hello"
+var optionalString: String? = "Don"
 optionalString == nil // check the string is Nil or not.
 
 // var optionalName: String? = "Don Leung"
 // use if let to compare the optional variable
 var optionalName: String? = "Don"
+optionalName = nil
 optionalName == nil
 var greeting = "Hello!"
 if let name = optionalName {
@@ -93,6 +94,7 @@ if let name = optionalName {
 }
 // Experiment:Change optionalName to nil. What greeting do you get? Add an else clause that sets a different greeting if optionalName is nil.
 // if no default clause, there is an error.
+// There is method here call hasSuffix, to return a boolean based on suffix here or not.
 let vegetable = "red pepper"
 switch vegetable {
 case"celery":
@@ -331,6 +333,72 @@ var circleInstance = Circle(radius: 5.0, name:"Hope it works")
 circleInstance.area()
 circleInstance.simpleDescription()
 
+// Inaddition to simple properties that are store, properties can have
+// * getter and setter *
+class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0.0
+    
+    init(sideLength: Double, name:String) {
+        self.sideLength = sideLength
+        super.init(name:name)
+        numberOfSides = 3
+    }
+    var perimeter: Double{
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
+    }
+    override func simpleDescription() -> String {
+        return "An equilateral triangle with sides of length \(sideLength)."
+    }
+}
+
+var triangleInstance = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+triangleInstance.perimeter
+triangleInstance.perimeter = 9.9
+triangleInstance.sideLength
+// Above: for variable, we make setter and getter, an the new value has the implicit name newValue. ** ONLY newValue **
+// If you don't need to compute the property but still need to provide code that is run before and after setting a new value, use "willSet" and "didSet". For example, the class below ensures that the side length of its triangle is always the same as the side length of its square.
+//
+class TriangleAndSquare {
+    var triangle: EquilateralTriangle {
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
+    }
+    var square:Square{
+        willSet {
+            triangle.sideLength = newValue.sideLength
+        }
+    }
+    init(size: Double, name:String) {
+        square = Square (sideLength: size, name:name)
+        triangle = EquilateralTriangle (sideLength:size, name:name)
+    }
+}
 
 
+var TriInstance = TriangleAndSquare (size: 10, name:"another test shape")
+TriInstance.square.sideLength
+TriInstance.triangle.sideLength
+TriInstance.square = Square(sideLength: 50, name:"larger square")
+TriInstance.triangle.sideLength
+TriInstance.triangle.name
 
+// ** IMPORTANT! **
+// Methods in class, except the first parameter, could have two parameter name, in the code below function incrementBy(), there two names for second parameter.
+class Counter {
+    var count: Int = 0
+    func incrementBy(amount: Int, numberOfTimes times: Int) {
+        count += amount * times
+    }
+}
+var counter = Counter()
+counter.incrementBy(2, numberOfTimes:7)
+
+// Optional Values **
+let optionalSquare: Square? = Square(sideLength:2.5, name:"optional square")
+let sideLength = optionalSquare?.sideLength

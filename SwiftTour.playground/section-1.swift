@@ -255,3 +255,82 @@ numbers.map({ number in 3*number })
 // In this one the first argument is the array which we need to sort, and the closure is the second argument let the sorted array follows the descending rule.
 sort([1,5,3,12,2]){ $0 > $1 }
 
+// * OBJECTS AND CLASSES *
+
+// Using class yourname { yourcode } to represent a class
+// SwiftProgramming in playground is NOT space sensative.
+// Experiment: Add a constant property with let, and add another method that takes argument.
+class Shape {
+    var numberOfSides = 0
+    let constant = 3
+    func simpleDescription() -> String {
+        return "A shape with \(numberOfSides) sides."
+    }
+    func methodWith(test: Int) -> String {
+        return "Just for experiment."
+    }
+}
+// Using dot to access the properties and methods of an instance.
+var shape = Shape()
+shape.numberOfSides = 7
+var shapeDescription = shape.simpleDescription()
+
+// Using init to let a class get a initializer.
+// Using deinit to createa deinitializer put some clean up before the object is deallocated
+class NamedShape {
+    var numberOfSides: Int = 0
+    var name: String
+    
+    init(name:String) {
+        self.name = name // Self is to distinguish the name property and the name argument.
+    }
+    func simpleDescription() -> String {
+        return "A Shape with \(numberOfSides) sides."
+    }
+}
+// For subclass we use colon to seperate.
+// override is to override superclass method, without it, the compiler will give an error.
+class Square:NamedShape {
+    var sideLength: Double
+    
+    init(sideLength: Double, name:String) {
+        self.sideLength = sideLength
+        super.init(name:name)
+        numberOfSides = 4
+    }
+    func area() -> Double {
+        return sideLength * sideLength
+    }
+    override func simpleDescription() -> String {
+        return "A square shape override superclass implementation"
+    }
+}
+
+var squareInstance = Square(sideLength:5.2, name:"Test")
+squareInstance.area()
+squareInstance.simpleDescription()
+
+// Experiement: make another subclass of NamedShape called Circle that takes a radius and a name as arguments to its initializer. Implment an area and a describe method on the Circle Class.
+class Circle:NamedShape {
+    var radius: Double
+    let pi: Double = 3.14
+    
+    init(radius: Double, name:String) {
+        self.radius = radius
+        super.init(name:name)
+    }
+    func area() -> Double {
+        return pi * radius * radius
+    }
+    override func simpleDescription() -> String {
+        return "A circle \(name) has been made."
+    }
+}
+
+var circleInstance = Circle(radius: 5.0, name:"Hope it works")
+circleInstance.area()
+circleInstance.simpleDescription()
+
+
+
+

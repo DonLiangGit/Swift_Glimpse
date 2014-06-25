@@ -402,3 +402,171 @@ counter.incrementBy(2, numberOfTimes:7)
 // Optional Values **
 let optionalSquare: Square? = Square(sideLength:2.5, name:"optional square")
 let sideLength = optionalSquare?.sideLength
+
+// * ENUMWERATION AND STRUCTURES *
+enum Rank: Int {
+    case Ace = 1
+    case Two, Three, Four, Fice, Six, Seven, Eight, Nine, Ten
+    case Jack, Queen, King
+    
+    func simpleDescription() -> String {
+        switch self {
+        case .Ace:
+            return "ace"
+        case .Jack:
+            return "jack"
+        case .Queen:
+            return "queen"
+        case .King:
+            return "king"
+        default:
+            return String(self.toRaw())
+        }
+    }
+}
+let ace = Rank.Ace
+let twoEnum = Rank.Two
+let aceRawValue = ace.toRaw()
+//let twoRawValue = two.toRaw()
+
+// Using toRaw() and fromRaw() to convert the raw value and the enumeration value.
+// details：http://see.xidian.edu.cn/cpp/html/2426.html
+if let convertedRank = Rank.fromRaw(1) {
+    let threeDescription = convertedRank.simpleDescription()
+}
+// Experiment: Write a function that compares two Rank values by comparing their raw values.
+
+//
+enum Suit {
+    case Spades, Hearts, Diamonds, Clubs
+    func simpleDescription() -> String {
+        switch self {
+        case .Spades:
+            return "spades"
+        case .Hearts:
+            return "hearts"
+        case .Diamonds:
+            return "diamonds"
+        case .Clubs:
+            return "clubs"
+        }
+    }
+    // add a color method to Suit that returns "black" for spades and clubs, and returns "red" for hearts and diamonds.
+    func color() -> String {
+        switch self {
+            case .Spades, .Clubs:
+                return "black"
+            case .Hearts, .Diamonds:
+                return "red"
+        }
+    }
+}
+let hearts = Suit.Hearts
+let heartsDescription = hearts.simpleDescription()
+let heartsColor = hearts.color()
+
+// Struct
+// Add a method to Card that creates a full deck of cards, with one card each combination of rank and suit
+struct Card {
+    var rank: Rank // Enum type
+    var suit: Suit // Enum type
+    
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+let threeOdSpadesDescription = threeOfSpades.simpleDescription()
+
+
+// * what ServerResponse is? *
+// Experiment: Add a third case to ServerResponse and to the switch
+enum ServerResponse {
+    case Result(String, String)
+    case Error(String)
+    case Swift(String)
+}
+
+let success = ServerResponse.Result("6:00 am","8:09 pm")
+let failure = ServerResponse.Error("Out of cheese.")
+let swift = ServerResponse.Swift("For experiment.")
+
+switch swift {
+case let .Result(sunrise, sunset):
+    let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+case let .Error(error):
+    let serverResponse = "Failure... \(error)"
+case let .Swift(swift):
+    let serverResponse = "Testing"
+}
+
+// * PROTOCOLS AND EXTENSIONS *
+
+// Using protocol to declare a protocol.
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += " Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+    return "The number \(self)"
+    }
+    mutating func adjust() {
+        self += 42
+    }
+}
+7.simpleDescription
+
+// * GENERICS *
+
+// Writing a name inside angle brackets to amke a generic function or type.
+func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
+    var result = ItemType[]()
+    for i in 0..times {
+        result += item
+    }
+    return result
+}
+repeat("knock", 4)
+
+enum OptionalValue<T> {
+    case None
+    case Some(T)
+}
+var possibleInteger: OptionalValue<Int> = .None
+possibleInteger = .Some(100)
+
+func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+anyCommonElements([1, 2, 3], [3])
+

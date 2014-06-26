@@ -503,9 +503,11 @@ case let .Swift(swift):
 // * PROTOCOLS AND EXTENSIONS *
 
 // Using protocol to declare a protocol.
+// Using protocol to unify the method and the property name.
+// Details:http://stackoverflow.com/questions/5530217/abstract-class-or-protocol-whats-the-cocoa-recommended-practice
 protocol ExampleProtocol {
     var simpleDescription: String { get }
-    mutating func adjust()
+    mutating func adjust() // if you need to modify the properties of your structure or enumeration within a particular method.
 }
 
 class SimpleClass: ExampleProtocol {
@@ -529,6 +531,7 @@ var b = SimpleStructure()
 b.adjust()
 let bDescription = b.simpleDescription
 
+// Extension is to extend the current type funcionality
 extension Int: ExampleProtocol {
     var simpleDescription: String {
     return "The number \(self)"
@@ -538,6 +541,16 @@ extension Int: ExampleProtocol {
     }
 }
 7.simpleDescription
+
+// Experiment: Write an extension for the Double type that adds an absoluteValue property.
+// Using the abs() built-in function
+extension Double {
+    var absoluteValue: Double {
+        return abs(self)
+    }
+}
+let testDouble: Double = -60.2
+let testDoubleDouble = testDouble.absoluteValue // using . to access the extendable property
 
 // * GENERICS *
 
@@ -550,7 +563,9 @@ func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
     return result
 }
 repeat("knock", 4)
+repeat(89, 3)
 
+//
 enum OptionalValue<T> {
     case None
     case Some(T)

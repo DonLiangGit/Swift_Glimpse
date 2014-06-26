@@ -565,7 +565,6 @@ func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
 repeat("knock", 4)
 repeat(89, 3)
 
-//
 enum OptionalValue<T> {
     case None
     case Some(T)
@@ -573,6 +572,10 @@ enum OptionalValue<T> {
 var possibleInteger: OptionalValue<Int> = .None
 possibleInteger = .Some(100)
 
+// Experiment: Modify the anyCommonElements function to make a function that returns an array of the elements that any two sequences have in common.
+// The code below examines whether there is some same elements between two Squence.
+// Using where it means generic< argument1, argument2... where, expression>
+// details: http://schani.wordpress.com/2014/06/06/generators-in-swift/
 func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
     for lhsItem in lhs {
         for rhsItem in rhs {
